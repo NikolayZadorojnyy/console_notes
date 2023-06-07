@@ -61,11 +61,26 @@ class Model:
             case _:
                 print("Такого пункта нет!")
 
-    def save_to_file(self):
+    def save_data(self):
         # save_choice = input("Сохранить данный в файл csv?\n1 - да\n2 - нет\n")
         # match save_choice:
         #     case "1":
-        with open("notes.csv", "w") as csv_wr:
-            writer = csv.writer(csv_wr)
-            for note in self.notes:
-                writer.writerow(note)
+        arr = []
+        for note in self.notes:
+            str1 = ""
+            str1 += note.id + "; " + note.date + "; " + \
+                    note.title + "; " + note.content + "\n"
+            arr.append(str1)
+        with open("notes.csv", "w+", encoding="utf-8") as csv_wr:
+            for line in arr:
+                csv_wr.write(line)
+        csv_wr.close()
+
+    def load_data(self, file_name):
+        file = open(file_name, encoding="utf-8")
+        data_list = []
+        for line in file:
+            a = line.rstrip(line[-1])
+            data_list.append((a))
+        file.close()
+        return data_list
