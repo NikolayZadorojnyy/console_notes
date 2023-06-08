@@ -1,7 +1,9 @@
-from datetime import datetime
 from note import *
 import csv
+
+
 class Model:
+
     def __init__(self, notes: list):
         self.notes = notes
 
@@ -33,7 +35,8 @@ class Model:
         for note in self.notes:
             if note.id == id:
                 found_note = note
-        return found_note
+            return found_note
+
     def show_note_by_id(self):
         choice_id = input("Введите id искомой записки: ")
         for note in self.notes:
@@ -49,38 +52,36 @@ class Model:
         print("Что вы хотите в ней отредактировать?")
         print("1 - title;\n2 - content")
         choice_item = input("Введите номер желаемого пункта: ")
-        match choice_item:
-            case "1":
-                choice_edit_item = input(
-                    "Введите новое название заголовка заметки: ")
-                edit_note.title = choice_edit_item
-                print("Заголовок записки успешно отредактирован!\n")
-            case "2":
-                choice_edit_item = input("Введите новое содержимое заметки: ")
-                edit_note.content = choice_edit_item
-                print("Содержимое записки успешно отредактировано!\n")
-            case _:
-                print("Такого пункта нет!\n")
+        if choice_item == "1":
+            choice_edit_item = input(
+                "Введите новое название заголовка заметки: ")
+            edit_note.title = choice_edit_item
+            print("Заголовок записки успешно отредактирован!\n")
+        elif choice_item == "2":
+            choice_edit_item = input("Введите новое содержимое заметки: ")
+            edit_note.content = choice_edit_item
+            print("Содержимое записки успешно отредактировано!\n")
+        else:
+            print("Такого пункта нет!\n")
 
     def save_data(self):
         save_choice = input(
             "Сохранить данные в файл csv?\n1 - да\n2 - нет\nВведите 1 или 2: ")
-        match save_choice:
-            case "1":
-                arr = []
-                for note in self.notes:
-                    arr.append([note.id, note.date, note.title, note.content])
-                with open("notes.csv", "w+", encoding="utf-8") as csv_wr:
-                    writter = csv.writer(csv_wr, lineterminator="\r")
-                    for i in range(len(arr)):
-                        writter.writerow(arr[i])
-                csv_wr.close()
-                print("Данные успешно сохранены в файл!\n")
-            case "2":
-                print("Сохранение отменено!\n")
-                return
-            case _:
-                print("Такого пункта нет!\n")
+        if save_choice == "1":
+            arr = []
+            for note in self.notes:
+                arr.append([note.id, note.date, note.title, note.content])
+            with open("notes.csv", "w+", encoding="utf-8") as csv_wr:
+                writter = csv.writer(csv_wr, lineterminator="\r")
+                for i in range(len(arr)):
+                    writter.writerow(arr[i])
+            csv_wr.close()
+            print("Данные успешно сохранены в файл!\n")
+        elif save_choice == "2":
+            print("Сохранение отменено!\n")
+            return
+        else:
+            print("Такого пункта нет!\n")
 
     def load_data(self):
         file = open("notes.csv", encoding="utf-8")
@@ -93,21 +94,7 @@ class Model:
         for i in range(len(data_list)):
             print()
             for j in range(4):
-                match data_list[i][j]:
-                    case "1":
-                        print(f"Заметка №{data_list[i][j]}")
-                    case "2":
-                        print(f"Заметка №{data_list[i][j]}")
-                    case "3":
-                        print(f"Заметка №{data_list[i][j]}")
-                    case "4":
-                        print(f"Заметка №{data_list[i][j]}")
-                    case "5":
-                        print(f"Заметка №{data_list[i][j]}")
-                    case "6":
-                        print(f"Заметка №{data_list[i][j]}")
-                    case _:
-                        print(data_list[i][j])
+                print(f"Заметка №{data_list[i][j]}")
         print()
 
     def sort_by_date(self):
