@@ -1,5 +1,6 @@
-from note import *
 import csv
+
+from note import *
 
 
 class Model:
@@ -45,8 +46,11 @@ class Model:
         for note in self.notes:
             print(f"Записка №{note.id}, {note.title}\n")
         u_choice = input("Выберите по id записку, которую хотите удалить:")
-        self.notes.remove(Model.find_note_by_id(self, u_choice))
-        print("Записка успешно удалена!\n")
+        try:
+            self.notes.remove(Model.find_note_by_id(self, u_choice))
+            print("Записка успешно удалена!\n")
+        except:
+            print('Записка не найдена')
 
     def find_note_by_id(self, id):
         for note in self.notes:
@@ -76,12 +80,18 @@ class Model:
         if choice_item == "1":
             choice_edit_item = input(
                 "Введите новое название заголовка заметки: ")
-            edit_note.title = choice_edit_item
-            print("Заголовок записки успешно отредактирован!\n")
+            try:
+                edit_note.title = choice_edit_item
+                print("Заголовок записки успешно отредактирован!\n")
+            except:
+                print('Заголовок не отредактирован, записка не найдена!')
         elif choice_item == "2":
             choice_edit_item = input("Введите новое содержимое заметки: ")
-            edit_note.content = choice_edit_item
-            print("Содержимое записки успешно отредактировано!\n")
+            try:
+                edit_note.content = choice_edit_item
+                print("Содержимое записки успешно отредактировано!\n")
+            except:
+                print('Содержимое не отредактировано, записка не найдена!')
         else:
             print("Такого пункта нет!\n")
 
@@ -92,7 +102,7 @@ class Model:
             arr = []
             for note in self.notes:
                 arr.append([note.id, note.date, note.title, note.content])
-            with open("notes.csv", "w+", encoding="utf-8") as csv_wr:
+            with open("notes.csv", mode='w+', encoding="utf-8") as csv_wr:
                 writter = csv.writer(csv_wr, lineterminator="\r")
                 for i in range(len(arr)):
                     writter.writerow(arr[i])
