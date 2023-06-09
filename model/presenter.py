@@ -2,7 +2,7 @@ from view import *
 from model import *
 
 
-class Presenter():
+class Presenter:
 
     def __init__(self, model_obj: Model, view_obj: View):
         self.model = model_obj
@@ -10,7 +10,7 @@ class Presenter():
 
     def start(self):
         flag = False
-        while (not flag):
+        while not flag:
             menu_choice = self.view.print_menu()
             if menu_choice == "1":
                 self.model.show_notes()
@@ -27,7 +27,9 @@ class Presenter():
             elif menu_choice == "7":
                 self.model.load_data()
             elif menu_choice == "8":
+                self.model.clear_file()
+            elif menu_choice == "9":
                 print("--Программа завершена--")
                 flag = True
-            else :
+            else:
                 print("Такого пункта нет!\n")

@@ -7,9 +7,26 @@ class Model:
     def __init__(self, notes: list):
         self.notes = notes
 
+    def load_data(self):
+        file = open("notes.csv", encoding="utf-8")
+        data_list = []
+        for line in file:
+            split_line = line.rstrip(line[-1]).split(",")
+            data_list.append(split_line)
+        file.close()
+        print("Список заметок из файла:")
+        for i in range(len(data_list)):
+            print()
+            for j in range(4):
+                print(f"Заметка №{data_list[i][j]}")
+        print()
+
     def show_notes(self):
-        print("Список заметок:")
         new_notes = Model.sort_by_date(self)
+        if len(new_notes) == 0:
+            print("Список заметок пуст!")
+        else:
+            print("Список заметок:")
         for note in new_notes:
             print(f"{note}\n")
 
@@ -42,6 +59,10 @@ class Model:
         for note in self.notes:
             if note.id == choice_id:
                 print(f"Искомая записка:\n{note}\n")
+
+    def clear_file(self):
+        open("notes.csv", 'w').close()
+        print("Файл заметок очищен!")
 
     def edit_note(self):
         for note in self.notes:
@@ -83,23 +104,9 @@ class Model:
         else:
             print("Такого пункта нет!\n")
 
-    def load_data(self):
-        file = open("notes.csv", encoding="utf-8")
-        data_list = []
-        for line in file:
-            split_line = line.rstrip(line[-1]).split(",")
-            data_list.append((split_line))
-        file.close()
-        print("Список заметок из файла:")
-        for i in range(len(data_list)):
-            print()
-            for j in range(4):
-                print(f"Заметка №{data_list[i][j]}")
-        print()
-
     def sort_by_date(self):
         for i in range(len(self.notes) - 1):
-            if (self.notes[i].date < self.notes[i + 1].date):
+            if self.notes[i].date < self.notes[i + 1].date:
                 buf = self.notes[i].date
                 self.notes[i].date = self.notes[i + 1].date
                 self.notes[i + 1].date = buf
