@@ -10,4 +10,4 @@ class Note:
         self.date = datetime.now().strftime('%Y %B %d %A | %H:%M')
 
     def __str__(self) -> str:
-        return f"Заметка № { self.id}\nДата: {self.date}\nЗаголовок: {self.title}\nСодержимое: {self.content}"
+        return f"Заметка № {self.id}\nДата: {self.date}\nЗаголовок: {self.title}\nСодержимое: {self.content}"

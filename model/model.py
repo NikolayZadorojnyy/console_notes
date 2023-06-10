@@ -1,6 +1,5 @@
-import csv
-
 from note import *
+import csv
 
 
 class Model:
